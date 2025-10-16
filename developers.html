@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Developers - MyxenPay</title>
+  <meta name="description" content="Developer resources, API documentation, and integration guides for MyxenPay crypto payment platform.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .main-content {
+      padding: 80px 0;
+    }
+
+    .api-section {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      margin: 3rem 0;
+    }
+
+    .code-block {
+      background: var(--bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+      margin: 2rem 0;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .endpoint {
+      background: var(--bg);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin: 1rem 0;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 0.9rem;
+    }
+
+    .method {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+
+    .method.get {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .method.post {
+      background: var(--primary);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="merchant.html">Merchant</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+        <li><a href="student-rewards.html">Student Rewards</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>👨‍💻 Developers</h1>
+        <p>Build the future of crypto payments with MyxenPay API</p>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="api-section">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">API Documentation</h2>
+          <p style="text-align: center; color: var(--text); opacity: 0.8; margin-bottom: 3rem;">Integrate MyxenPay into your applications with our comprehensive REST API</p>
+          
+          <h3 style="color: var(--text); margin-bottom: 1rem;">Base URL</h3>
+          <div class="endpoint">
+            https://api.myxenpay.finance/v1
+          </div>
+
+          <h3 style="color: var(--text); margin-bottom: 1rem;">Authentication</h3>
+          <div class="code-block">
+// Include your API key in the Authorization header
+const response = await fetch('https://api.myxenpay.finance/v1/merchants', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+});
+          </div>
+
+          <h3 style="color: var(--text); margin-bottom: 1rem;">API Endpoints</h3>
+          
+          <div class="endpoint">
+            <span class="method post">POST</span>/merchants - Create a new merchant
+          </div>
+          
+          <div class="endpoint">
+            <span class="method get">GET</span>/merchants/{id} - Get merchant details
+          </div>
+          
+          <div class="endpoint">
+            <span class="method post">POST</span>/payments - Process a payment
+          </div>
+          
+          <div class="endpoint">
+            <span class="method get">GET</span>/payments/{id} - Get payment status
+          </div>
+          
+          <div class="endpoint">
+            <span class="method post">POST</span>/qr/generate - Generate QR code
+          </div>
+          
+          <div class="endpoint">
+            <span class="method get">GET</span>/analytics - Get merchant analytics
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>SDKs & Libraries</h3>
+            <p>Official SDKs for JavaScript, Python, PHP, and more to get you started quickly.</p>
+            <a href="#" class="action-btn">View SDKs</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Documentation</h3>
+            <p>Comprehensive guides, tutorials, and API reference documentation.</p>
+            <a href="#" class="action-btn">Read Docs</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🧪</div>
+            <h3>Sandbox Environment</h3>
+            <p>Test your integrations with our sandbox environment before going live.</p>
+            <a href="#" class="action-btn">Try Sandbox</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Developer Support</h3>
+            <p>Get help from our developer team and community through Discord and GitHub.</p>
+            <a href="#" class="action-btn">Join Community</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3>Webhooks</h3>
+            <p>Receive real-time notifications about payment events and status changes.</p>
+            <a href="#" class="action-btn">Setup Webhooks</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Rate Limits</h3>
+            <p>Generous rate limits to support high-volume applications and integrations.</p>
+            <a href="#" class="action-btn">View Limits</a>
+          </div>
+        </div>
+
+        <div class="api-section">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">Quick Start Example</h2>
+          <div class="code-block">
+// JavaScript/Node.js Example
+const MyxenPay = require('@myxenpay/sdk');
+
+const client = new MyxenPay({
+  apiKey: 'your_api_key_here',
+  environment: 'sandbox' // or 'production'
+});
+
+// Create a payment
+const payment = await client.payments.create({
+  amount: 25.50,
+  currency: 'USDC',
+  merchantId: 'merchant_123',
+  description: 'Coffee purchase'
+});
+
+console.log('Payment created:', payment.id);
+
+// Generate QR code
+const qrCode = await client.qr.generate({
+  merchantId: 'merchant_123',
+  amount: 25.50,
+  currency: 'USDC'
+});
+
+console.log('QR Code URL:', qrCode.url);
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>

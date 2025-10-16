@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KVWK4RJ2QN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KVWK4RJ2QN');
+  </script>
+  <meta name="google-site-verification" content="your-verification-code" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyxenPay – Global Crypto Payments Platform</title>
+  <meta name="description" content="Non-custodial DeFi platform with VISA virtual cards, QR payments worldwide, student rewards, and streaming payroll — all on Solana.">
+  <meta property="og:title" content="MyxenPay – Global Crypto Payments Platform">
+  <meta property="og:description" content="Fair launch on Pump.fun. No presale. Real utility for students & merchants worldwide.">
+  <meta property="og:image" content="https://myxenpay.finance/og/og-home.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: white;
+      color: var(--primary);
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .action-btn.secondary {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .action-btn.secondary:hover {
+      background: white;
+      color: var(--primary);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 80px 0;
+      background: var(--bg);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .feature-link:hover {
+      color: var(--secondary);
+    }
+
+    /* Stats Section */
+    .stats {
+      padding: 60px 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--card-bg);
+      padding: 3rem 0 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul li a {
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .action-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="/" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="tokenomics.html">Tokenomics</a></li>
+        <li><a href="whitepaper.html">Whitepaper</a></li>
+        <li><a href="student-rewards.html">Student Rewards</a></li>
+        <li><a href="developers.html">Developers</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Global Crypto Payments Made Simple</h1>
+          <p>Accept payments anywhere in the world with QR codes, VISA virtual cards, and instant settlements — all on Solana.</p>
+          <div class="cta-buttons">
+            <a href="merchant.html" class="action-btn">
+              <span>💳</span> Generate QR Code
+            </a>
+            <a href="local-currency-display.html" class="action-btn secondary">
+              <span>🌍</span> Local Currency
+            </a>
+            <a href="student-rewards.html" class="action-btn secondary">
+              <span>🎓</span> Student Rewards
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Why Choose MyxenPay?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>Student Rewards</h3>
+            <p>Get 5% cashback on university payments (max $500). Verified off-chain. No KYC.</p>
+            <a href="student-rewards.html" class="feature-link">Learn more →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💼</div>
+            <h3>Streaming Payroll</h3>
+            <p>Revolutionary real-time salary payments for businesses. Process payroll instantly with crypto.</p>
+            <a href="streaming-payroll.html" class="feature-link">Learn more →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h3>VISA Virtual Cards</h3>
+            <p>Spend your crypto anywhere with our VISA virtual cards. Convert crypto to fiat seamlessly.</p>
+            <a href="visa-virtual-card.html" class="feature-link">Learn more →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <h3>0.5%</h3>
+            <p>Transaction Fees</p>
+          </div>
+          <div class="stat-item">
+            <h3>5-10s</h3>
+            <p>Instant Settlement</p>
+          </div>
+          <div class="stat-item">
+            <h3>Global</h3>
+            <p>Worldwide Access</p>
+          </div>
+          <div class="stat-item">
+            <h3>Solana</h3>
+            <p>Fast & Secure</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Global QR Payments</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Accept Payments Worldwide</h3>
+            <p>Any business anywhere can accept crypto payments via QR codes — no bank account needed.</p>
+            <a href="merchant.html" class="feature-link">Generate QR →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Merchant Dashboard</h3>
+            <p>Track payments, manage settlements, and access analytics with our powerful merchant dashboard.</p>
+            <a href="merchant-dashboard.html" class="feature-link">Access Dashboard →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Solana Payment System</h3>
+            <p>Built on Solana for lightning-fast transactions and minimal fees. The future of payments.</p>
+            <a href="solana-payment-system.html" class="feature-link">Learn more →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">For Businesses</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🏪</div>
+            <h3>Retail & Commerce</h3>
+            <p>Revolutionize your business with instant crypto payments. Lower fees, faster settlements, global reach with MyxenPay.</p>
+            <a href="Retail_&_Commerce.php" class="feature-link">Learn More →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Analytics & Reporting</h3>
+            <p>Access advanced analytics, reporting, and customer insights for merchants.</p>
+            <a href="merchants.html" class="feature-link">Explore Features →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure Gateway</h3>
+            <p>Secure Crypto Payment Gateway for the Future of Finance</p>
+            <a href="merchants.html" class="feature-link">Get Started →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Token Economics</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Fair Launch</h3>
+            <p>No presale, no private sales. Fair launch on Pump.fun with real utility from day one.</p>
+            <a href="fair-launch.html" class="feature-link">Learn more →</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔥</div>
+            <h3>Real Revenue Burns</h3>
+            <p>Token burns funded by real platform revenue. Sustainable tokenomics with actual utility.</p>
+            <a href="real-revenue-burns.html" class="feature-link">Learn more →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="merchants.html">For Businesses</a></li>
+            <li><a href="student-rewards.html">Student Rewards</a></li>
+            <li><a href="streaming-payroll.html">Streaming Payroll</a></li>
+            <li><a href="merchant-dashboard.html">Merchant Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="whitepaper.html">Whitepaper</a></li>
+            <li><a href="tokenomics.html">Tokenomics</a></li>
+            <li><a href="developers.html">Developers</a></li>
+            <li><a href="solana-payment-system.html">Solana Integration</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://x.com/bikkhoto_devs" target="_blank">Twitter</a></li>
+            <li><a href="https://t.me/myxenpay" target="_blank">Telegram</a></li>
+            <li><a href="https://discord.gg/myxenpay" target="_blank">Discord</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 MyXenPay. All rights reserved. Making crypto payments accessible for everyone.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

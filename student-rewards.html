@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Rewards - MyxenPay</title>
+  <meta name="description" content="Get 5% cashback on university payments with MyxenPay. Verified off-chain, no KYC required. Maximum $500 cashback per student.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .main-content {
+      padding: 80px 0;
+    }
+
+    .rewards-card {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .rewards-card h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .rewards-card .highlight {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--secondary);
+      margin: 1rem 0;
+    }
+
+    .verification-form {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      margin-bottom: 3rem;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .verify-btn {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .verify-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(48, 209, 88, 0.3);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    .benefits-list {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    .benefits-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .benefits-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .benefits-list li:last-child {
+      border-bottom: none;
+    }
+
+    .benefits-list .icon {
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .rewards-card, .verification-form {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="merchant.html">Merchant</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+        <li><a href="developers.html">Developers</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>🎓 Student Rewards</h1>
+        <p>Get 5% cashback on university payments with MyxenPay</p>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="rewards-card">
+          <h2>Earn While You Learn</h2>
+          <div class="highlight">5% Cashback</div>
+          <p>Maximum $500 cashback per student • Verified off-chain • No KYC required</p>
+        </div>
+
+        <div class="verification-form">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">Student Verification</h2>
+          <form id="studentForm">
+            <div class="form-group">
+              <label for="studentEmail">University Email Address</label>
+              <input type="email" id="studentEmail" placeholder="your.name@university.edu" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="university">University Name</label>
+              <input type="text" id="university" placeholder="Enter your university name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="studentId">Student ID (Optional)</label>
+              <input type="text" id="studentId" placeholder="Enter your student ID">
+            </div>
+            
+            <div class="form-group">
+              <label for="walletAddress">Solana Wallet Address</label>
+              <input type="text" id="walletAddress" placeholder="Enter your Solana wallet address" required>
+            </div>
+            
+            <button type="submit" class="verify-btn">Verify Student Status</button>
+          </form>
+          
+          <div id="verificationResult" style="display: none; text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg); border-radius: 12px; border: 1px solid var(--border);">
+            <h3 style="color: var(--secondary); margin-bottom: 1rem;">✅ Verification Successful!</h3>
+            <p>You're now eligible for 5% cashback on all university payments up to $500.</p>
+          </div>
+        </div>
+
+        <div class="benefits-list">
+          <h3 style="margin-bottom: 1.5rem; color: var(--text);">Student Benefits</h3>
+          <ul>
+            <li>
+              <span class="icon">💰</span>
+              <div>
+                <strong>5% Cashback</strong><br>
+                Get 5% back on tuition, books, and university expenses
+              </div>
+            </li>
+            <li>
+              <span class="icon">🚫</span>
+              <div>
+                <strong>No KYC Required</strong><br>
+                Simple email verification - no complex identity checks
+              </div>
+            </li>
+            <li>
+              <span class="icon">⚡</span>
+              <div>
+                <strong>Instant Payments</strong><br>
+                Pay university fees in 5-10 seconds with crypto
+              </div>
+            </li>
+            <li>
+              <span class="icon">🌍</span>
+              <div>
+                <strong>Global Access</strong><br>
+                Pay from anywhere in the world without restrictions
+              </div>
+            </li>
+            <li>
+              <span class="icon">🔒</span>
+              <div>
+                <strong>Secure & Private</strong><br>
+                Your financial data stays private and secure
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>University Payments</h3>
+            <p>Pay tuition, housing, meal plans, and other university expenses with crypto</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Textbook Purchases</h3>
+            <p>Buy textbooks and course materials with instant crypto payments</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h3>Student Services</h3>
+            <p>Pay for parking, printing, and other campus services seamlessly</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Student verification form
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('studentEmail').value;
+      const university = document.getElementById('university').value;
+      const studentId = document.getElementById('studentId').value;
+      const walletAddress = document.getElementById('walletAddress').value;
+      
+      if (!email || !university || !walletAddress) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      // Simulate verification process
+      setTimeout(() => {
+        const result = document.getElementById('verificationResult');
+        result.style.display = 'block';
+        result.scrollIntoView({ behavior: 'smooth' });
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
