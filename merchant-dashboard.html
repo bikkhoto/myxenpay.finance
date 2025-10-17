@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Merchant Dashboard - MyxenPay</title>
+  <meta name="description" content="Track payments, manage settlements, and access analytics with MyxenPay merchant dashboard.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .main-content {
+      padding: 120px 0 80px;
+    }
+
+    .dashboard-header {
+      margin-bottom: 3rem;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .dashboard-header p {
+      color: var(--text);
+      opacity: 0.7;
+      font-size: 1.1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .stat-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .stat-card .label {
+      color: var(--text);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .dashboard-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .transaction-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .transaction-item:last-child {
+      border-bottom: none;
+    }
+
+    .transaction-info h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+
+    .transaction-info p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    .transaction-amount {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .qr-section {
+      text-align: center;
+    }
+
+    .qr-code {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 1rem;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border: 1px solid var(--border);
+    }
+
+    .qr-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 122, 255, 0.3);
+    }
+
+    .action-btn.secondary {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .action-btn.secondary:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .chart-placeholder {
+      height: 200px;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .qr-actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="merchant.html">Merchant</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+        <li><a href="student-rewards.html">Student Rewards</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="main-content">
+      <div class="container">
+        <div class="dashboard-header">
+          <h1>Merchant Dashboard</h1>
+          <p>Track your payments, manage settlements, and access detailed analytics</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="icon">💰</div>
+            <div class="value">$12,450</div>
+            <div class="label">Total Revenue</div>
+          </div>
+          <div class="stat-card">
+            <div class="icon">📊</div>
+            <div class="value">247</div>
+            <div class="label">Transactions</div>
+          </div>
+          <div class="stat-card">
+            <div class="icon">⚡</div>
+            <div class="value">5.2s</div>
+            <div class="label">Avg. Settlement</div>
+          </div>
+          <div class="stat-card">
+            <div class="icon">🎯</div>
+            <div class="value">98.5%</div>
+            <div class="label">Success Rate</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <h3>Recent Transactions</h3>
+            <ul class="transaction-list">
+              <li class="transaction-item">
+                <div class="transaction-info">
+                  <h4>Payment #247</h4>
+                  <p>2 minutes ago • SOL</p>
+                </div>
+                <div class="transaction-amount">+2.5 SOL</div>
+              </li>
+              <li class="transaction-item">
+                <div class="transaction-info">
+                  <h4>Payment #246</h4>
+                  <p>15 minutes ago • USDC</p>
+                </div>
+                <div class="transaction-amount">+150 USDC</div>
+              </li>
+              <li class="transaction-item">
+                <div class="transaction-info">
+                  <h4>Payment #245</h4>
+                  <p>1 hour ago • MYXEN</p>
+                </div>
+                <div class="transaction-amount">+500 MYXEN</div>
+              </li>
+              <li class="transaction-item">
+                <div class="transaction-info">
+                  <h4>Payment #244</h4>
+                  <p>2 hours ago • SOL</p>
+                </div>
+                <div class="transaction-amount">+1.8 SOL</div>
+              </li>
+              <li class="transaction-item">
+                <div class="transaction-info">
+                  <h4>Payment #243</h4>
+                  <p>3 hours ago • USDC</p>
+                </div>
+                <div class="transaction-amount">+75 USDC</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="qr-section">
+              <h3>Your QR Code</h3>
+              <div class="qr-code">QR</div>
+              <p style="margin-bottom: 1.5rem; color: var(--text); opacity: 0.7;">Scan to make payments</p>
+              <div class="qr-actions">
+                <button class="action-btn" onclick="generateNewQR()">Generate New QR</button>
+                <button class="action-btn secondary" onclick="downloadQR()">Download QR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>Revenue Analytics</h3>
+          <div class="chart-placeholder">
+            📈 Revenue chart would be displayed here
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Dashboard functions
+    function generateNewQR() {
+      alert('Generating new QR code... This would create a fresh QR code with updated settings.');
+    }
+
+    function downloadQR() {
+      alert('Downloading QR code... This would download the current QR code as an image file.');
+    }
+
+    // Simulate real-time updates
+    setInterval(() => {
+      // In a real implementation, this would fetch new transaction data
+      console.log('Checking for new transactions...');
+    }, 30000); // Check every 30 seconds
+  </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Merchant QR Code Generator - MyxenPay</title>
+  <meta name="description" content="Generate QR codes for instant crypto payments. Accept SOL, USDC, and MYXEN tokens with 0.5% fees and 5-10 second settlements.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .main-content {
+      padding: 80px 0;
+    }
+
+    .qr-generator {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      margin-bottom: 3rem;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .generate-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 122, 255, 0.3);
+    }
+
+    .qr-result {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 2rem;
+      background: var(--bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1rem;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .qr-generator {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+        <li><a href="student-rewards.html">Student Rewards</a></li>
+        <li><a href="developers.html">Developers</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Generate Your QR Code</h1>
+        <p>Accept crypto payments instantly with your personalized QR code</p>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="qr-generator">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">Merchant QR Generator</h2>
+          <form id="qrForm">
+            <div class="form-group">
+              <label for="walletAddress">Solana Wallet Address</label>
+              <input type="text" id="walletAddress" placeholder="Enter your Solana wallet address" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="businessName">Business Name (Optional)</label>
+              <input type="text" id="businessName" placeholder="Enter your business name">
+            </div>
+            
+            <div class="form-group">
+              <label for="currency">Preferred Currency</label>
+              <select id="currency">
+                <option value="SOL">SOL</option>
+                <option value="USDC">USDC</option>
+                <option value="MYXEN">MYXEN</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="amount">Default Amount (Optional)</label>
+              <input type="number" id="amount" placeholder="Enter default amount" step="0.01">
+            </div>
+            
+            <button type="submit" class="generate-btn">Generate QR Code</button>
+          </form>
+          
+          <div id="qrResult" class="qr-result" style="display: none;">
+            <div class="qr-code" id="qrCode">QR</div>
+            <h3 id="qrTitle">Your QR Code</h3>
+            <p id="qrDescription">Scan this QR code to make payments</p>
+            <button onclick="downloadQR()" style="background: var(--primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-top: 1rem;">Download QR Code</button>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Instant Payments</h3>
+            <p>Receive payments in 5-10 seconds with Solana's lightning-fast blockchain</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3>Low Fees</h3>
+            <p>Only 0.5% transaction fees compared to 2-3% with traditional processors</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Global Access</h3>
+            <p>Accept payments from anywhere in the world without geographical restrictions</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // QR Code generation
+    document.getElementById('qrForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const walletAddress = document.getElementById('walletAddress').value;
+      const businessName = document.getElementById('businessName').value;
+      const currency = document.getElementById('currency').value;
+      const amount = document.getElementById('amount').value;
+      
+      if (!walletAddress) {
+        alert('Please enter a valid Solana wallet address');
+        return;
+      }
+      
+      // Generate QR code data
+      const qrData = {
+        wallet: walletAddress,
+        currency: currency,
+        amount: amount || null,
+        business: businessName || null,
+        timestamp: Date.now()
+      };
+      
+      // Display QR result
+      const qrResult = document.getElementById('qrResult');
+      const qrTitle = document.getElementById('qrTitle');
+      const qrDescription = document.getElementById('qrDescription');
+      
+      qrTitle.textContent = businessName ? `${businessName} - ${currency} Payment` : `${currency} Payment QR`;
+      qrDescription.textContent = amount ? 
+        `Scan to pay ${amount} ${currency} to ${walletAddress.substring(0, 8)}...` :
+        `Scan to pay ${currency} to ${walletAddress.substring(0, 8)}...`;
+      
+      qrResult.style.display = 'block';
+      qrResult.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function downloadQR() {
+      // In a real implementation, this would generate and download an actual QR code image
+      alert('QR Code download functionality would be implemented with a QR code generation library');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tokenomics - MyxenPay</title>
+  <meta name="description" content="Learn about MYXEN token economics, distribution, and utility within the MyxenPay ecosystem.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .main-content {
+      padding: 80px 0;
+    }
+
+    .tokenomics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .tokenomics-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .tokenomics-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .tokenomics-card .value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .tokenomics-card .description {
+      color: var(--text);
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    .distribution-chart {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .chart-placeholder {
+      height: 300px;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: 0.7;
+      margin: 2rem 0;
+    }
+
+    .utility-section {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    .utility-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .utility-item {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .utility-item .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    .utility-item h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .utility-item p {
+      color: var(--text);
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    .burn-mechanism {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      color: white;
+      padding: 3rem;
+      border-radius: 20px;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .burn-mechanism h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .burn-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .burn-stat h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .burn-stat p {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .tokenomics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="merchant.html">Merchant</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+        <li><a href="student-rewards.html">Student Rewards</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>🪙 Tokenomics</h1>
+        <p>Understanding MYXEN token economics and utility</p>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="tokenomics-grid">
+          <div class="tokenomics-card">
+            <h3>Total Supply</h3>
+            <div class="value">1B</div>
+            <div class="description">MYXEN Tokens</div>
+          </div>
+          <div class="tokenomics-card">
+            <h3>Circulating Supply</h3>
+            <div class="value">850M</div>
+            <div class="description">Currently in circulation</div>
+          </div>
+          <div class="tokenomics-card">
+            <h3>Market Cap</h3>
+            <div class="value">$2.1M</div>
+            <div class="description">Current market valuation</div>
+          </div>
+          <div class="tokenomics-card">
+            <h3>Burned Tokens</h3>
+            <div class="value">150M</div>
+            <div class="description">Permanently removed from supply</div>
+          </div>
+        </div>
+
+        <div class="distribution-chart">
+          <h2 style="margin-bottom: 2rem; color: var(--text);">Token Distribution</h2>
+          <div class="chart-placeholder">
+            📊 Token distribution pie chart would be displayed here
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
+            <div style="text-align: left;">
+              <h4 style="color: var(--text); margin-bottom: 0.5rem;">Public Sale (Pump.fun)</h4>
+              <p style="color: var(--text); opacity: 0.8;">70% - 700M tokens</p>
+            </div>
+            <div style="text-align: left;">
+              <h4 style="color: var(--text); margin-bottom: 0.5rem;">Liquidity Pool</h4>
+              <p style="color: var(--text); opacity: 0.8;">15% - 150M tokens</p>
+            </div>
+            <div style="text-align: left;">
+              <h4 style="color: var(--text); margin-bottom: 0.5rem;">Team & Development</h4>
+              <p style="color: var(--text); opacity: 0.8;">10% - 100M tokens</p>
+            </div>
+            <div style="text-align: left;">
+              <h4 style="color: var(--text); margin-bottom: 0.5rem;">Marketing & Partnerships</h4>
+              <p style="color: var(--text); opacity: 0.8;">5% - 50M tokens</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="utility-section">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">Token Utility</h2>
+          <div class="utility-grid">
+            <div class="utility-item">
+              <div class="icon">💳</div>
+              <h4>Payment Processing</h4>
+              <p>Use MYXEN tokens for payments with reduced transaction fees</p>
+            </div>
+            <div class="utility-item">
+              <div class="icon">🎓</div>
+              <h4>Student Rewards</h4>
+              <p>Earn MYXEN tokens as cashback for university payments</p>
+            </div>
+            <div class="utility-item">
+              <div class="icon">🏪</div>
+              <h4>Merchant Benefits</h4>
+              <p>Lower fees and premium features for MYXEN token holders</p>
+            </div>
+            <div class="utility-item">
+              <div class="icon">🗳️</div>
+              <h4>Governance</h4>
+              <p>Vote on platform upgrades and feature development</p>
+            </div>
+            <div class="utility-item">
+              <div class="icon">🔥</div>
+              <h4>Token Burns</h4>
+              <p>Revenue-based token burns to reduce supply over time</p>
+            </div>
+            <div class="utility-item">
+              <div class="icon">💎</div>
+              <h4>Staking Rewards</h4>
+              <p>Stake MYXEN tokens to earn additional rewards</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="burn-mechanism">
+          <h2>🔥 Revenue-Based Token Burns</h2>
+          <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">A portion of platform revenue is used to buy back and burn MYXEN tokens, creating deflationary pressure and increasing token value over time.</p>
+          <div class="burn-stats">
+            <div class="burn-stat">
+              <h3>25%</h3>
+              <p>of platform revenue used for burns</p>
+            </div>
+            <div class="burn-stat">
+              <h3>$50K</h3>
+              <p>burned this month</p>
+            </div>
+            <div class="burn-stat">
+              <h3>150M</h3>
+              <p>total tokens burned</p>
+            </div>
+            <div class="burn-stat">
+              <h3>15%</h3>
+              <p>supply reduction to date</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>

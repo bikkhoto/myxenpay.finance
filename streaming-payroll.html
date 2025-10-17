@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Streaming Payroll - MyxenPay</title>
+  <meta name="description" content="Revolutionary real-time salary payments for businesses. Process payroll instantly with crypto on Solana blockchain.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.05);
+      --primary: #007AFF;
+      --secondary: #30D158;
+      --accent: #FF9F0A;
+      --header-bg: rgba(255, 255, 255, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #000000;
+      --text: #f5f5f7;
+      --card-bg: rgba(30, 30, 30, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --primary: #0A84FF;
+      --secondary: #32D74B;
+      --accent: #FF9F0A;
+      --header-bg: rgba(0, 0, 0, 0.8);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .main-content {
+      padding: 80px 0;
+    }
+
+    .payroll-demo {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      margin-bottom: 3rem;
+    }
+
+    .payroll-demo h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text);
+    }
+
+    .employee-list {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .employee-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .employee-info h4 {
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+
+    .employee-info p {
+      color: var(--text);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    .salary-amount {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .payroll-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 122, 255, 0.3);
+    }
+
+    .action-btn.secondary {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .action-btn.secondary:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    .benefits-section {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .benefit-item {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .benefit-item .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    .benefit-item h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .benefit-item p {
+      color: var(--text);
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .payroll-demo {
+        padding: 2rem;
+      }
+      
+      .payroll-actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo">MyxenPay</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="merchant.html">Merchant</a></li>
+        <li><a href="merchants.html">For Businesses</a></li>
+        <li><a href="student-rewards.html">Student Rewards</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>💼 Streaming Payroll</h1>
+        <p>Revolutionary real-time salary payments for businesses</p>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="payroll-demo">
+          <h2>Payroll Management Dashboard</h2>
+          <div class="employee-list">
+            <div class="employee-item">
+              <div class="employee-info">
+                <h4>Alice Johnson</h4>
+                <p>Software Engineer</p>
+              </div>
+              <div class="salary-amount">2.5 SOL</div>
+            </div>
+            <div class="employee-item">
+              <div class="employee-info">
+                <h4>Bob Smith</h4>
+                <p>Marketing Manager</p>
+              </div>
+              <div class="salary-amount">1.8 SOL</div>
+            </div>
+            <div class="employee-item">
+              <div class="employee-info">
+                <h4>Carol Davis</h4>
+                <p>Designer</p>
+              </div>
+              <div class="salary-amount">2.0 SOL</div>
+            </div>
+            <div class="employee-item">
+              <div class="employee-info">
+                <h4>David Wilson</h4>
+                <p>Sales Representative</p>
+              </div>
+              <div class="salary-amount">1.5 SOL</div>
+            </div>
+          </div>
+          
+          <div class="payroll-actions">
+            <button class="action-btn" onclick="processPayroll()">Process Payroll</button>
+            <button class="action-btn secondary" onclick="addEmployee()">Add Employee</button>
+            <button class="action-btn secondary" onclick="viewHistory()">Payment History</button>
+          </div>
+        </div>
+
+        <div class="benefits-section">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">Why Choose Streaming Payroll?</h2>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <div class="icon">⚡</div>
+              <h4>Instant Payments</h4>
+              <p>Pay employees in 5-10 seconds instead of waiting for traditional banking</p>
+            </div>
+            <div class="benefit-item">
+              <div class="icon">💰</div>
+              <h4>Lower Costs</h4>
+              <p>Save on banking fees and international transfer costs</p>
+            </div>
+            <div class="benefit-item">
+              <div class="icon">🌍</div>
+              <h4>Global Teams</h4>
+              <p>Pay remote employees worldwide without currency restrictions</p>
+            </div>
+            <div class="benefit-item">
+              <div class="icon">🔒</div>
+              <h4>Secure & Transparent</h4>
+              <p>Blockchain-based payments with full transaction transparency</p>
+            </div>
+            <div class="benefit-item">
+              <div class="icon">📊</div>
+              <h4>Real-time Tracking</h4>
+              <p>Monitor all payroll transactions in real-time</p>
+            </div>
+            <div class="benefit-item">
+              <div class="icon">🔄</div>
+              <h4>Automated Processing</h4>
+              <p>Set up recurring payments and automated salary distributions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Employee Management</h3>
+            <p>Add, edit, and manage employee information and salary structures</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h3>Multi-Currency Support</h3>
+            <p>Pay in SOL, USDC, or MYXEN tokens based on employee preferences</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Analytics & Reporting</h3>
+            <p>Comprehensive payroll analytics and reporting for better financial management</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Payroll functions
+    function processPayroll() {
+      alert('Processing payroll... This would initiate real-time salary payments to all employees via Solana blockchain.');
+    }
+
+    function addEmployee() {
+      alert('Add Employee functionality would open a form to add new employees to the payroll system.');
+    }
+
+    function viewHistory() {
+      alert('Payment History would show a detailed log of all payroll transactions and employee payments.');
+    }
+  </script>
+</body>
+</html>
